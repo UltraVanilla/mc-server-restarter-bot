@@ -5,6 +5,9 @@ import fetch from "node-fetch";
 
 dotenv.config();
 
+const ROLE_WHITELIST = JSON.parse(process.env.ROLE_WHITELIST as string);
+const ROLE_WHITELIST_ENABLED = (process.env.ROLE_WHITELIST_ENABLED as string) === "true";
+
 const client = new discord.Client({
     intents: [discord.Intents.FLAGS.GUILDS, discord.Intents.FLAGS.GUILD_MESSAGES],
 });
@@ -33,16 +36,21 @@ client.once("ready", () => {
 
     client.on("interactionCreate", async (interaction) => {
         if (!(interaction.isButton() && interaction.customId === "start_server")) return;
+        if (interaction.member == null) return;
 
-        const response = await fetch(process.env.START_URL as string);
+        const roles = (interaction.member.roles as discord.GuildMemberRoleManager).cache;
 
-        if (response.status >= 200 && response.status < 300) {
-            try {
+        if (ROLE_WHITELIST_ENABLED && !Array.from(roles.keys()).some((role) => ROLE_WHITELIST.includes(role))) {
+            await interaction.reply({
+                content: `<@${interaction.member?.user.id}> You must be a member of UltraVanilla for 10 days to start the creative server. Ask @Staff for Loyalist role.`,
+            });
+        } else {
+            const response = await fetch(process.env.START_URL as string);
+
+            if (response.status >= 200 && response.status < 300) {
                 await interaction.reply({
                     content: `<@${interaction.member?.user.id}> Attempting to boot server, please wait...`,
                 });
-            } catch (err) {
-                console.error(err);
             }
         }
     });
