@@ -1,0 +1,33 @@
+{
+  "name": "mc-server-restarter-bot",
+  "version": "1.0.0",
+  "description": "Discord bot to restart UV creative server",
+  "scripts": {
+    "start": "node lib/bot.js",
+    "test": "node lib/test.js",
+    "ts": "tsc --declaration",
+    "watch": "run-p watch:ts",
+    "watch:ts": "tsc -w --declaration",
+    "build": "npm run ts",
+    "prepublish": "npm run build"
+  },
+  "author": "lordpipe",
+  "license": "(CC0-1.0 OR ISC)",
+  "dependencies": {
+    "discord.js": "^13.1.0",
+    "dotenv": "^10.0.0",
+    "node-fetch": "^2.6.2"
+  },
+  "devDependencies": {
+    "@types/node": "^16.7.13",
+    "@types/node-fetch": "^2.5.12",
+    "@typescript-eslint/eslint-plugin": "^4.31.0",
+    "@typescript-eslint/parser": "^4.31.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.3.2",
+    "typescript": "^4.4.2"
+  }
+}
