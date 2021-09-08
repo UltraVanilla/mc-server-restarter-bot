@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 import * as discord from "discord.js";
+import { MessageButton, MessageActionRow } from "discord.js";
 import fetch from "node-fetch";
 
 dotenv.config();
@@ -20,8 +21,8 @@ client.once("ready", () => {
         m.reply({
             content: "**Start creative server?**",
             components: [
-                new discord.MessageActionRow().addComponents(
-                    new discord.MessageButton()
+                new MessageActionRow().addComponents(
+                    new MessageButton()
                         .setCustomId("start_server")
                         .setLabel("Start Creative Server")
                         .setStyle("SUCCESS"),
