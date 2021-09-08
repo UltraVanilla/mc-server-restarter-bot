@@ -34,7 +34,6 @@ client.once("ready", () => {
     client.on("interactionCreate", async (interaction) => {
         if (!(interaction.isButton() && interaction.customId === "start_server")) return;
 
-        console.log(interaction);
         const response = await fetch(process.env.START_URL as string);
 
         if (response.status >= 200 && response.status < 300) {
